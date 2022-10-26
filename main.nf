@@ -20,6 +20,7 @@ if(params.help) {
                 "b0_thr_extract_b0":"$params.b0_thr_extract_b0",
                 "dwi_shell_tolerance":"$params.dwi_shell_tolerance",
                 "dilate_b0_mask_prelim_brain_extraction":"$params.dilate_b0_mask_prelim_brain_extraction",
+                "run_bet_prelim_dwi":"$params.run_bet_prelim_dwi",
                 "bet_prelim_f":"$params.bet_prelim_f",
                 "run_dwi_denoising":"$params.run_dwi_denoising",
                 "extent":"$params.extent",
@@ -387,7 +388,7 @@ process Bet_Prelim_DWI {
     file "${sid}__b0_bet_mask.nii.gz"
 
     when:
-    rev_b0_count == 0 || (!params.run_topup && params.run_eddy)
+    (rev_b0_count == 0 || (!params.run_topup && params.run_eddy)) && params.run_bet_prelim_dwi
 
     script:
     """
